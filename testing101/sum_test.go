@@ -19,7 +19,7 @@ func TestSum(t *testing.T) {
 
 func TestMultipleTestsForSum(t *testing.T) {
 	t.Run("All positive", testSumFunc([]int{1, 2, 3, 4, 5}, 15))
-	t.Run("Some Negative", testSumFunc([]int{1, -2, 3, -4, 2}, 3))
+	t.Run("Some Negative", testSumFunc([]int{1, -2, 3, -4, 2}, 0))
 }
 
 func testSumFunc(numbers []int, expected int) func(*testing.T) {
