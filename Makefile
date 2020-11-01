@@ -33,10 +33,10 @@ linter:
 .PHONY: test
 test:
 	@echo "=> Running tests"
-	@go test ./... -covermode=atomic -coverpkg=./... -count=1 -race
+	@go test -v ./... -covermode=atomic -coverpkg=./... -count=1 -race
 
 .PHONY: test-cover
 test-cover:
 	@echo "=> Running tests and generating report"
-	@go test ./... -covermode=atomic -coverprofile=/tmp/coverage.out -coverpkg=./... -count=1
+	@go test -v ./... -covermode=atomic -coverprofile=/tmp/coverage.out -coverpkg=./... -count=1
 	@go tool cover -html=/tmp/coverage.out
