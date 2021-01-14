@@ -1,20 +1,30 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
 	"sync"
-	"time"
 )
 
 func main() {
+	urls := []string{
+		"https://www.usegolang.com",
+		"https://testwithgo.com",
+		"https://invalid.gophercises.com",
+	}
 	var wg sync.WaitGroup
-	for i := 0; i < 5; i++ {
+
+	for _, url := range urls {
 		wg.Add(1)
-		go func(j int) {
+		go func(url string) {
 			defer wg.Done()
-			time.Sleep(1 * time.Second)
-			fmt.Printf("Goroutine #%d finished.\n", j)
-		}(i)
+			resp, err := http.Get(url)
+			if err != nil {
+				// Make note of an error
+				return
+			}
+			// Make note of the resp.Status
+			_ = resp.Status
+		}(url)
 	}
 	wg.Wait()
 }
