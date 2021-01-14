@@ -2,19 +2,29 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"sync"
-	"time"
 )
 
 func main() {
+	urls := []string{
+		"https://www.usegolang.com",
+		"https://testwithgo.com",
+		"https://gophercises.com",
+	}
 	var wg sync.WaitGroup
-	for i := 0; i < 5; i++ {
+
+	for _, url := range urls {
 		wg.Add(1)
-		go func(j int) {
+		go func(url string) {
 			defer wg.Done()
-			time.Sleep(1 * time.Second)
-			fmt.Printf("Goroutine #%d finished.\n", j)
-		}(i)
+			_, err := http.Get(url)
+			if err != nil {
+				fmt.Printf("Error pinging: %v\n", url)
+				return
+			}
+			fmt.Printf("Successful ping: %v\n", url)
+		}(url)
 	}
 	wg.Wait()
 }
